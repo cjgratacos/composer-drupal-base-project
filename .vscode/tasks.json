@@ -1,0 +1,27 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "taskName": "drush:rs",
+            "command": "cd web && ../vendor/bin/drush rs",
+            "type": "shell"
+        },
+        {
+            "taskName": "composer:install",
+            "command": "composer install",
+            "type": "shell"
+        },
+        {
+            "taskName": "composer:update",
+            "command": "composer update",
+            "type": "shell"
+        },
+        {
+            "taskName": "drush:cr",
+            "command": "cd web && ../vendor/bin/drush cr",
+            "type": "shell"
+        }
+    ]
+}

@@ -1,0 +1,66 @@
+{
+    "name": "carlos/grader-app",
+    "description": "Grading Web App",
+    "type": "project",
+    "license": "GNU GPL3",
+    "authors": [
+        {
+            "name": "cjgratacos",
+            "email": "cjgratacos@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }
+    ],
+    "require": {
+        "cweagans/composer-patches": "^1.5.0",
+        "composer/installers": "1.2.0",
+        "drupal-composer/drupal-scaffold": "^2.0.0",
+        "drupal/core": "^8.3.4",
+        "webflo/drupal-core-strict": "^8.3.4",
+        "drupal/openapi": "1.0.0-alpha1",
+        "drupal/jsonapi": "1.0.0",
+        "drupal/simple_oauth": "2.0-rc2"
+    },
+    "require-dev":{
+        "drush/drush": "~8.0",
+        "jcalderonzumba/gastonjs": "~1.0.2",
+        "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
+        "mikey179/vfsstream": "~1.2",
+        "symfony/css-selector": "~2.8",
+        "consolidation/robo": "^1.0.0"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            
+        ],
+
+        "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+        "test": "./vendor/bin/robo test",
+        "test:server:up": "./vendor/bin/drush rs web/"
+    },
+    "extra": {
+       "installer-paths": {
+      "web/core": [
+        "type:drupal-core"
+      ],
+      "web/modules/contrib/{$name}": [
+        "type:drupal-module"
+      ],
+      "web/profiles/contrib/{$name}": [
+        "type:drupal-profile"
+      ],
+      "web/themes/contrib/{$name}": [
+        "type:drupal-theme"
+      ],
+      "web/contrib/{$name}": [
+        "type:drupal-drush"
+      ]
+    },
+        "enable-patching":true
+    }
+}
