@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "013c187cbbe3333184a1ae29959dc1eb",
+    "content-hash": "75b4a9f6aca7390d8885b374769d2ff0",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -770,12 +770,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core.git",
-                "reference": "e386f0c2377a9178012a04e292670d4949878250"
+                "reference": "2777468508c905aae43a25da7ff11f4ee5602e10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core/zipball/e386f0c2377a9178012a04e292670d4949878250",
-                "reference": "e386f0c2377a9178012a04e292670d4949878250",
+                "url": "https://api.github.com/repos/drupal/core/zipball/2777468508c905aae43a25da7ff11f4ee5602e10",
+                "reference": "2777468508c905aae43a25da7ff11f4ee5602e10",
                 "shasum": ""
             },
             "require": {
@@ -947,7 +947,7 @@
                 "GPL-2.0+"
             ],
             "description": "Drupal is an open source content management platform powering millions of websites and applications.",
-            "time": "2017-07-11 15:22:22"
+            "time": "2017-07-17 16:11:43"
         },
         {
             "name": "drupal/jsonapi",
@@ -960,7 +960,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/jsonapi-8.x-1.0.zip",
-                "reference": null,
+                "reference": "8.x-1.0",
                 "shasum": "d5bdd22561a6283f7e5ff06635c9d85248927f73"
             },
             "require": {
@@ -1014,7 +1014,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/openapi-8.x-1.0-alpha1.zip",
-                "reference": null,
+                "reference": "8.x-1.0-alpha1",
                 "shasum": "580e244c5a53419e95dfb8c7b7b9c67273b8e9b9"
             },
             "require": {
@@ -1193,7 +1193,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/simple_oauth-8.x-2.0-rc2.zip",
-                "reference": null,
+                "reference": "8.x-2.0-rc2",
                 "shasum": "e204c2a10725915337e3f855c911c5804fc87227"
             },
             "require": {
@@ -1230,6 +1230,57 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/simple_oauth"
             }
+        },
+        {
+            "name": "drush/config-extra",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/drush-ops/config-extra.git",
+                "reference": "5c2a51903d816b769737ba1c31408450eb134860"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/drush-ops/config-extra/zipball/5c2a51903d816b769737ba1c31408450eb134860",
+                "reference": "5c2a51903d816b769737ba1c31408450eb134860",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=3.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "8.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Drush": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Moshe Weitzman",
+                    "email": "weitzman@tejasa.com"
+                },
+                {
+                    "name": "Greg Anderson",
+                    "email": "greg.1.anderson@greenknowe.org"
+                }
+            ],
+            "description": "Drush config-extra contains additional configuration Drush commands, notably config-merge.",
+            "keywords": [
+                "Drush"
+            ],
+            "time": "2017-04-24 02:40:28"
         },
         {
             "name": "easyrdf/easyrdf",
@@ -3894,12 +3945,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/consolidation/Robo.git",
-                "reference": "7106b9fd614b70b68780595acd3fb6fd3d1eec09"
+                "reference": "1e146f2ba46c04299f52b304d3b9637b25c0b32c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/consolidation/Robo/zipball/7106b9fd614b70b68780595acd3fb6fd3d1eec09",
-                "reference": "7106b9fd614b70b68780595acd3fb6fd3d1eec09",
+                "url": "https://api.github.com/repos/consolidation/Robo/zipball/1e146f2ba46c04299f52b304d3b9637b25c0b32c",
+                "reference": "1e146f2ba46c04299f52b304d3b9637b25c0b32c",
                 "shasum": ""
             },
             "require": {
@@ -3965,7 +4016,7 @@
                 }
             ],
             "description": "Modern task runner",
-            "time": "2017-07-07 19:48:58"
+            "time": "2017-07-16 18:47:04"
         },
         {
             "name": "container-interop/container-interop",
@@ -4091,17 +4142,192 @@
             "time": "2014-10-24T07:27:01+00:00"
         },
         {
+            "name": "drupal/devel",
+            "version": "dev-1.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/devel",
+                "reference": "a61fab12009fadaf75417557c99dce44fdd1df5b"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "suggest": {
+                "symfony/var-dumper": "Pretty print complex values better with var-dumper available"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-rc2+23-dev",
+                    "datestamp": "1499415243"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Moshe Weitzman",
+                    "homepage": "https://github.com/weitzman",
+                    "email": "weitzman@tejasa.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Hans Salvisberg",
+                    "homepage": "https://www.drupal.org/u/salvis",
+                    "email": "drupal@salvisberg.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Luca Lusso",
+                    "homepage": "https://www.drupal.org/u/lussoluca",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Marco (willzyx)",
+                    "homepage": "https://www.drupal.org/u/willzyx",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "See contributors",
+                    "homepage": "https://www.drupal.org/node/3236/committers"
+                },
+                {
+                    "name": "salvis",
+                    "homepage": "https://www.drupal.org/user/82964"
+                },
+                {
+                    "name": "willzyx",
+                    "homepage": "https://www.drupal.org/user/1043862"
+                }
+            ],
+            "description": "Various blocks, pages, and functions for developers.",
+            "homepage": "http://drupal.org/project/devel",
+            "support": {
+                "source": "http://cgit.drupalcode.org/devel",
+                "issues": "http://drupal.org/project/devel",
+                "irc": "irc://irc.freenode.org/drupal-contribute"
+            }
+        },
+        {
+            "name": "drupal/examples",
+            "version": "dev-1.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/examples",
+                "reference": "7d3e4f173a3cb09cf11a57a1e90bb635a5bb0f33"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "require-dev": {
+                "drupal/simpletest_example": "*",
+                "drupal/stream_wrapper_example": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.x-dev",
+                    "datestamp": "1500142141"
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Dave Reid",
+                    "homepage": "https://www.drupal.org/user/53892"
+                },
+                {
+                    "name": "Itangalo",
+                    "homepage": "https://www.drupal.org/user/153998"
+                },
+                {
+                    "name": "Mile23",
+                    "homepage": "https://www.drupal.org/user/116231"
+                },
+                {
+                    "name": "Torenware",
+                    "homepage": "https://www.drupal.org/user/18784"
+                },
+                {
+                    "name": "add1sun",
+                    "homepage": "https://www.drupal.org/user/65088"
+                },
+                {
+                    "name": "cyberswat",
+                    "homepage": "https://www.drupal.org/user/27802"
+                },
+                {
+                    "name": "ilo",
+                    "homepage": "https://www.drupal.org/user/118449"
+                },
+                {
+                    "name": "jhodgdon",
+                    "homepage": "https://www.drupal.org/user/155601"
+                },
+                {
+                    "name": "jn2",
+                    "homepage": "https://www.drupal.org/user/1001014"
+                },
+                {
+                    "name": "katbailey",
+                    "homepage": "https://www.drupal.org/user/172987"
+                },
+                {
+                    "name": "linclark",
+                    "homepage": "https://www.drupal.org/user/396253"
+                },
+                {
+                    "name": "marvil07",
+                    "homepage": "https://www.drupal.org/user/132175"
+                },
+                {
+                    "name": "mikl",
+                    "homepage": "https://www.drupal.org/user/58679"
+                },
+                {
+                    "name": "rfay",
+                    "homepage": "https://www.drupal.org/user/30906"
+                },
+                {
+                    "name": "socketwench",
+                    "homepage": "https://www.drupal.org/user/65793"
+                },
+                {
+                    "name": "yched",
+                    "homepage": "https://www.drupal.org/user/39567"
+                }
+            ],
+            "description": "The Examples for Developers project aims to provide high-quality, well-documented API examples for a broad range of Drupal core functionality.",
+            "homepage": "https://www.drupal.org/project/examples",
+            "support": {
+                "source": "http://cgit.drupalcode.org/examples",
+                "issues": "https://www.drupal.org/project/issues/examples",
+                "documentation": "https://api.drupal.org/api/examples"
+            }
+        },
+        {
             "name": "drush/drush",
             "version": "8.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drush-ops/drush.git",
-                "reference": "0eba6aa358455153c212a3876bcad5189fc0c86b"
+                "reference": "e2c0a75e5bedcb987378c71b9df35ae1d463a6aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drush-ops/drush/zipball/0eba6aa358455153c212a3876bcad5189fc0c86b",
-                "reference": "0eba6aa358455153c212a3876bcad5189fc0c86b",
+                "url": "https://api.github.com/repos/drush-ops/drush/zipball/e2c0a75e5bedcb987378c71b9df35ae1d463a6aa",
+                "reference": "e2c0a75e5bedcb987378c71b9df35ae1d463a6aa",
                 "shasum": ""
             },
             "require": {
@@ -4193,7 +4419,7 @@
             ],
             "description": "Drush is a command line shell and scripting interface for Drupal, a veritable Swiss Army knife designed to make life easier for those of us who spend some of our working hours hacking away at the command prompt.",
             "homepage": "http://www.drush.org",
-            "time": "2017-06-23 18:12:13"
+            "time": "2017-07-17 13:31:11"
         },
         {
             "name": "grasmash/yaml-expander",
@@ -4766,12 +4992,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "9e5dae226e10f6845ddc17afd2bc5aa2fe4369eb"
+                "reference": "960179af9b3c8ecd36354e3f484fd33be9ce12ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/9e5dae226e10f6845ddc17afd2bc5aa2fe4369eb",
-                "reference": "9e5dae226e10f6845ddc17afd2bc5aa2fe4369eb",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/960179af9b3c8ecd36354e3f484fd33be9ce12ac",
+                "reference": "960179af9b3c8ecd36354e3f484fd33be9ce12ac",
                 "shasum": ""
             },
             "require": {
@@ -4831,7 +5057,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2017-07-09 14:48:33"
+            "time": "2017-07-18 15:08:43"
         },
         {
             "name": "symfony/css-selector",
@@ -5151,9 +5377,15 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "drush/config-extra": 20,
+        "drupal/devel": 20,
+        "drupal/examples": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "~7.1"
+    },
     "platform-dev": []
 }

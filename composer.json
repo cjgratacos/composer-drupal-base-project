@@ -17,6 +17,7 @@
         }
     ],
     "require": {
+        "php":"~7.1",
         "cweagans/composer-patches": "^1.5.0",
         "composer/installers": "1.2.0",
         "drupal-composer/drupal-scaffold": "^2.0.0",
@@ -24,7 +25,8 @@
         "webflo/drupal-core-strict": "^8.3.4",
         "drupal/openapi": "1.0.0-alpha1",
         "drupal/jsonapi": "1.0.0",
-        "drupal/simple_oauth": "2.0-rc2"
+        "drupal/simple_oauth": "2.0-rc2",
+        "drush/config-extra": "^8.0@dev"
     },
     "require-dev":{
         "drush/drush": "~8.0",
@@ -32,14 +34,20 @@
         "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
         "mikey179/vfsstream": "~1.2",
         "symfony/css-selector": "~2.8",
-        "consolidation/robo": "^1.0.0"
+        "consolidation/robo": "^1.0.0",
+        "drupal/devel":"^1.0@dev",
+        "drupal/examples":"^1.0@dev"
+    },
+    "autoload": {
+      "psr-4": {
+        "cjgratacos\\Deployment\\Composer\\":"scripts/composer"
+      }
     },
     "scripts": {
         "post-install-cmd": [
-            
+          "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+          "cjgratacos\\Deployment\\Composer\\Handler::createLinks"
         ],
-
-        "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
         "test": "./vendor/bin/robo test",
         "test:server:up": "./vendor/bin/drush rs web/"
     },
@@ -47,6 +55,9 @@
        "installer-paths": {
       "web/core": [
         "type:drupal-core"
+      ],
+      "web/libraries/{$name}":[
+          "type:drupal-library"
       ],
       "web/modules/contrib/{$name}": [
         "type:drupal-module"
@@ -62,5 +73,8 @@
       ]
     },
         "enable-patching":true
+    },
+    "config": {
+        "bin-dir": "vendor/bin/"
     }
 }
