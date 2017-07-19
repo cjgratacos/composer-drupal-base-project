@@ -26,7 +26,8 @@
         "drupal/openapi": "1.0.0-alpha1",
         "drupal/jsonapi": "1.0.0",
         "drupal/simple_oauth": "2.0-rc2",
-        "drush/config-extra": "^8.0@dev"
+        "drush/config-extra": "^8.0@dev",
+        "drupal/console":"~1.0"
     },
     "require-dev":{
         "drush/drush": "~8.0",
@@ -48,8 +49,9 @@
           "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
           "cjgratacos\\Deployment\\Composer\\Handler::createLinks"
         ],
-        "test": "./vendor/bin/robo test",
-        "test:server:up": "./vendor/bin/drush rs web/"
+        "dev:server:install": "cjgratacos\\Deployment\\Composer\\Handler::siteInstallDev",
+        "dev:server:up": "cjgratacos\\Deployment\\Composer\\Handler::runServer",
+        "test": "./vendor/bin/robo test"
     },
     "extra": {
        "installer-paths": {
@@ -72,7 +74,13 @@
         "type:drupal-drush"
       ]
     },
-        "enable-patching":true
+        "enable-patching":true,
+        "dev:db":{
+          "password": "password",
+          "driver":"sqlite",
+          "path":"sites/default/files/.ht.sqlite"
+        },
+        "dev:server:port": 8888
     },
     "config": {
         "bin-dir": "vendor/bin/"
