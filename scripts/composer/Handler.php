@@ -30,6 +30,11 @@ class Handler
         return Handler::getProjectRoot().'/vendor/bin/drush';
     }
 
+
+    static protected function getDrupalConsole():string {
+        return Handler::getProjectRoot().'/vendor/bin/drupal';
+    }
+
     static protected function attachPrefixBasePathToFolderList(string $basePath, string $suffixFolder = null):array {
 
         $folders = Handler::getFoldersList();
@@ -111,7 +116,13 @@ class Handler
         $process->setTimeout(null);
 
         // Run Process
-        $process->run();
+        $process->run(function ($type, $buffer){
+            if (Process::ERR === $type) {
+                echo "ERROR: ".$buffer;
+            } else {
+                echo "INFO: ".$buffer;
+            }
+        });
 
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);

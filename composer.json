@@ -51,7 +51,16 @@
         ],
         "dev:server:install": "cjgratacos\\Deployment\\Composer\\Handler::siteInstallDev",
         "dev:server:up": "cjgratacos\\Deployment\\Composer\\Handler::runServer",
-        "test": "./vendor/bin/robo test"
+        "test": "./vendor/bin/robo test",
+        "drupalRoot": "cd web/",
+        "cmd:drush:cr":[
+          "@cdrupalRoot",
+          "../vendor/bin/drush cr"
+        ],
+        "cmd:drupal:services":[
+          "@drupalRoot",
+          "../vendor/bin/drupal debug:container"
+        ]
     },
     "extra": {
        "installer-paths": {
@@ -78,7 +87,7 @@
         "dev:db":{
           "password": "password",
           "driver":"sqlite",
-          "path":"sites/default/files/.ht.sqlite"
+          "path":"sites/default/files/"
         },
         "dev:server:port": 8888
     },
