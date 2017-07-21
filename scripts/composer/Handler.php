@@ -2,40 +2,44 @@
 
 namespace cjgratacos\Deployment\Composer;
 
+use Drupal\Component\Assertion\Handle;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use Composer\Script\Event;
 
 class Handler
 {
+    private const BACKUP_PATH = "~/.drupal-sqlite-backup";
+    private const BACKUP_FULL_PATH = Handler::BACKUP_PATH . '/backup.sqlite';
 
-    static protected function getProjectRoot():string {
+    protected static function getProjectRoot():string {
         return getcwd();
     }
 
-    static protected function getDrupalRoot():string {
+    protected static function getDrupalRoot():string {
         return Handler::getProjectRoot().'/web';
     }
 
-    static protected function getFoldersList():array {
+    protected static function getFoldersList():array {
         return [
             "themes",
             "modules"
         ];
     }
 
-    static protected function getDrush():string {
-        return Handler::getProjectRoot().'/vendor/bin/drush';
+    protected static function getDrush():string {
+        return Handler::getProjectRoot().'/bin/drush';
     }
 
 
-    static protected function getDrupalConsole():string {
-        return Handler::getProjectRoot().'/vendor/bin/drupal';
+    protected static function getDrupalConsole():string {
+        return Handler::getProjectRoot().'/bin/drupal';
     }
 
-    static protected function attachPrefixBasePathToFolderList(string $basePath, string $suffixFolder = null):array {
+    protected static function attachPrefixBasePathToFolderList(string $basePath, string $suffixFolder = null):array {
 
         $folders = Handler::getFoldersList();
         $suffixFolder = $suffixFolder?:'';
@@ -44,7 +48,7 @@ class Handler
         },$folders);
     }
 
-    static public function createLinks():void{
+    public static function createLinks():void{
         $sourceDestMap = array_combine(
             Handler::attachPrefixBasePathToFolderList(Handler::getProjectRoot()),
             Handler::attachPrefixBasePathToFolderList(Handler::getDrupalRoot(), '/dev')
@@ -59,7 +63,7 @@ class Handler
         }
     }
 
-    static public function siteInstallDev(Event $event):void{
+    public static function siteInstallDev(Event $event):void{
         // Get extra's that are in the composer.json
         $extra = $event->getComposer()->getPackage()->getExtra();
 
@@ -86,16 +90,16 @@ class Handler
         $process->setTimeout(null);
         $process->enableOutput();
         // Run Process
-        $process->run();
+        $process->run(function ($type, $buffer){
+            echo "INFO[$type]: ".$buffer;
+        });
 
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
-
-        echo $process->getOutput();
     }
 
-    static public function runServer(Event $event):void{
+    public static function runServer(Event $event):void{
         // Get extra's that are in the composer.json
         $extra = $event->getComposer()->getPackage()->getExtra();
 
@@ -117,17 +121,81 @@ class Handler
 
         // Run Process
         $process->run(function ($type, $buffer){
-            if (Process::ERR === $type) {
-                echo "ERROR: ".$buffer;
-            } else {
-                echo "INFO: ".$buffer;
-            }
+            echo "INFO[$type]: ".$buffer;
         });
 
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
+    }
 
-        echo $process->getOutput();
+    public static function backupDevServer(Event $event):void {
+        // Get extra's that are in the composer.json
+        $extra = $event->getComposer()->getPackage()->getExtra();
+
+        //  Validation that db:pass is in extra and that is a string
+        // TODO: Make extra db configurable
+        if (!isset($extra['dev:db']) || !is_array($extra['dev:db'])) {
+            throw new InvalidArgumentException("The parameter 'dev:db' needs to be configured through the extra.dev:db settings",1);
+        }
+
+        // Getting the Dev DB
+        $dev_db = $extra['dev:db'];
+
+        if ($dev_db['driver'] !== "sqlite") {
+            throw new InvalidArgumentException("Only supporting SQLite backup at the moment.",1);
+        }
+
+        $fs = new Filesystem();
+
+        $drupalRoot = Handler::getDrupalRoot();
+
+        $fs->remove(Handler::BACKUP_PATH);
+        $fs->mkdir(Handler::BACKUP_PATH);
+        $fs->copy($dev_db['path'], Handler::BACKUP_FULL_PATH);
+
+        echo "Finished backing up ${dev_db['path']} to ".Handler::BACKUP_FULL_PATH ;
+    }
+
+    public static function restoreBackupDevServer(Event $event):void {
+        // Get extra's that are in the composer.json
+        $extra = $event->getComposer()->getPackage()->getExtra();
+
+        //  Validation that db:pass is in extra and that is a string
+        // TODO: Make extra db configurable
+        if (!isset($extra['dev:db']) || !is_array($extra['dev:db'])) {
+            throw new InvalidArgumentException("The parameter 'dev:db' needs to be configured through the extra.dev:db settings",1);
+        }
+
+        // Getting the Dev DB
+        $dev_db = $extra['dev:db'];
+
+        if ($dev_db['driver'] !== "sqlite") {
+            throw new InvalidArgumentException("Only supporting SQLite restore at the moment.",1);
+        }
+
+        $fs = new Filesystem();
+
+        if ($fs->exists(Handler::BACKUP_FULL_PATH)) {
+            throw new FileException("File ".Handler::BACKUP_FULL_PATH." doesn't exist, unable to restore backup",1);
+        }
+
+        $drupalRoot = Handler::getDrupalRoot();
+
+        $fs->copy(Handler::BACKUP_FULL_PATH, $dev_db['path']);
+        $fs->remove(Handler::BACKUP_PATH);
+
+        echo "Finished restoring ". Handler::BACKUP_FULL_PATH." to ${dev_db['path']}";
+    }
+
+    public static function removeBackupDevServer():void {
+        $fs = new Filesystem();
+        $fs->remove(Handler::BACKUP_PATH);
+        if ($fs->exists(Handler::BACKUP_FULL_PATH)) {
+            $fs->remove(Handler::BACKUP_PATH);
+            echo "Backup found and removed";
+        } else {
+            echo "No backup was found";
+        }
     }
 }

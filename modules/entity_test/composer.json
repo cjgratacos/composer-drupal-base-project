@@ -10,5 +10,10 @@
     "issues": "https://www.drupal.org/project/issues/entity_test",
     "source": "http://cgit.drupalcode.org/entity_test"
   },
+  "autoload": {
+    "psr-4": {
+      "Drupal\\cjgratacos\\entity_test\\":"src/"
+    }
+  },
   "require": { }
 }

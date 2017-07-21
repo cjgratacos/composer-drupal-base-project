@@ -51,6 +51,9 @@
         ],
         "dev:server:install": "cjgratacos\\Deployment\\Composer\\Handler::siteInstallDev",
         "dev:server:up": "cjgratacos\\Deployment\\Composer\\Handler::runServer",
+        "dev:server:backup": "cjgratacos\\Deployment\\Composer\\Handler::backupDevServer",
+        "dev:server:restore": "cjgratacos\\Deployment\\Composer\\Handler::restoreBackupDevServer",
+        "dev:server:rmbackup": "cjgratacos\\Deployment\\Composer\\Handler::removeBackupDevServer",
         "test": "./vendor/bin/robo test",
         "drupalRoot": "cd web/",
         "cmd:drush:cr":[
@@ -87,11 +90,11 @@
         "dev:db":{
           "password": "password",
           "driver":"sqlite",
-          "path":"sites/default/files/"
+          "path":"sites/default/files/.ht.sqlite"
         },
         "dev:server:port": 8888
     },
     "config": {
-        "bin-dir": "vendor/bin/"
+        "bin-dir": "bin/"
     }
 }
