@@ -288,16 +288,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/consolidation/annotated-command.git",
-                "reference": "6672ea38212f8bffb71fec7eadc8b3372154b17e"
+                "reference": "27daf5bd0f8cfb69130b55b80f3ac374fb19ab08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/consolidation/annotated-command/zipball/6672ea38212f8bffb71fec7eadc8b3372154b17e",
-                "reference": "6672ea38212f8bffb71fec7eadc8b3372154b17e",
+                "url": "https://api.github.com/repos/consolidation/annotated-command/zipball/27daf5bd0f8cfb69130b55b80f3ac374fb19ab08",
+                "reference": "27daf5bd0f8cfb69130b55b80f3ac374fb19ab08",
                 "shasum": ""
             },
             "require": {
-                "consolidation/output-formatters": "^3.1.5",
+                "consolidation/output-formatters": "^3.1.10",
                 "php": ">=5.4.0",
                 "phpdocumentor/reflection-docblock": "^2.0|^3.0.2",
                 "psr/log": "^1",
@@ -332,7 +332,7 @@
                 }
             ],
             "description": "Initialize Symfony Console commands from annotated command class methods.",
-            "time": "2017-04-03 22:37:00"
+            "time": "2017-07-21 19:24:23"
         },
         {
             "name": "consolidation/config",
@@ -1641,12 +1641,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core.git",
-                "reference": "2777468508c905aae43a25da7ff11f4ee5602e10"
+                "reference": "dcd3a19229051f4dade381260be0b95b7bffefb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core/zipball/2777468508c905aae43a25da7ff11f4ee5602e10",
-                "reference": "2777468508c905aae43a25da7ff11f4ee5602e10",
+                "url": "https://api.github.com/repos/drupal/core/zipball/dcd3a19229051f4dade381260be0b95b7bffefb3",
+                "reference": "dcd3a19229051f4dade381260be0b95b7bffefb3",
                 "shasum": ""
             },
             "require": {
@@ -1818,7 +1818,7 @@
                 "GPL-2.0+"
             ],
             "description": "Drupal is an open source content management platform powering millions of websites and applications.",
-            "time": "2017-07-17 16:11:43"
+            "time": "2017-07-21 14:13:53"
         },
         {
             "name": "drupal/jsonapi",
@@ -1831,7 +1831,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/jsonapi-8.x-1.0.zip",
-                "reference": "8.x-1.0",
+                "reference": null,
                 "shasum": "d5bdd22561a6283f7e5ff06635c9d85248927f73"
             },
             "require": {
@@ -1885,7 +1885,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/openapi-8.x-1.0-alpha1.zip",
-                "reference": "8.x-1.0-alpha1",
+                "reference": null,
                 "shasum": "580e244c5a53419e95dfb8c7b7b9c67273b8e9b9"
             },
             "require": {
@@ -2064,7 +2064,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://ftp.drupal.org/files/projects/simple_oauth-8.x-2.0-rc2.zip",
-                "reference": "8.x-2.0-rc2",
+                "reference": null,
                 "shasum": "e204c2a10725915337e3f855c911c5804fc87227"
             },
             "require": {
@@ -3438,12 +3438,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "5617c17274f8e4e83fc83e4eba5ead3202dd64b4"
+                "reference": "e3186c3c61cbb1c49eb12a0301acc32f5d0a6b86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/5617c17274f8e4e83fc83e4eba5ead3202dd64b4",
-                "reference": "5617c17274f8e4e83fc83e4eba5ead3202dd64b4",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/e3186c3c61cbb1c49eb12a0301acc32f5d0a6b86",
+                "reference": "e3186c3c61cbb1c49eb12a0301acc32f5d0a6b86",
                 "shasum": ""
             },
             "require": {
@@ -3503,7 +3503,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2017-07-19 05:51:26"
+            "time": "2017-07-23 05:06:13"
         },
         {
             "name": "stack/builder",
@@ -5848,7 +5848,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/devel",
-                "reference": "a61fab12009fadaf75417557c99dce44fdd1df5b"
+                "reference": "65d9e2274c0e8c8126299df8f4f289b83f0c5f4b"
             },
             "require": {
                 "drupal/core": "~8.0"
@@ -5862,8 +5862,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-rc2+23-dev",
-                    "datestamp": "1499415243"
+                    "version": "8.x-1.0-rc2+27-dev",
+                    "datestamp": "1500708843"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -5913,7 +5913,7 @@
                 "issues": "http://drupal.org/project/devel",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
             },
-            "time": "2017-07-10 23:54:42"
+            "time": "2017-07-23 10:13:14"
         },
         {
             "name": "drupal/examples",
@@ -5921,7 +5921,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/examples",
-                "reference": "7d3e4f173a3cb09cf11a57a1e90bb635a5bb0f33"
+                "reference": "9ba0e3b12d6bb89e89fbd3e69c708d62afa3b68d"
             },
             "require": {
                 "drupal/core": "*"
@@ -5937,7 +5937,7 @@
                 },
                 "drupal": {
                     "version": "8.x-1.x-dev",
-                    "datestamp": "1500142141"
+                    "datestamp": "1500862143"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -6017,7 +6017,7 @@
                 "issues": "https://www.drupal.org/project/issues/examples",
                 "documentation": "https://api.drupal.org/api/examples"
             },
-            "time": "2017-07-18 17:32:36"
+            "time": "2017-07-24 02:58:53"
         },
         {
             "name": "jcalderonzumba/gastonjs",

@@ -2,7 +2,6 @@
 
 namespace cjgratacos\Deployment\Composer;
 
-use Drupal\Component\Assertion\Handle;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
