@@ -1,0 +1,7 @@
+entity_test.course_add:
+  route: entity_test.course_add
+  title: 'Add Contact'
+
+appears_on:
+  - entity.entity_test_course.collection
+  - entity.entity_test_course.canonical

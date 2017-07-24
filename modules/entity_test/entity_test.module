@@ -3,6 +3,14 @@
 /**
  * @file
  * Contains entity_test.module.
+ * @defgroup entity_test Example: Content Entity
+ * @ingroup examples
+ * @{
+ * Implment a Content Entity.
+ *
+ * This modules demonstrates implementing a Content Entity.
+ * Fieldable Content Entity.
+ * }
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;

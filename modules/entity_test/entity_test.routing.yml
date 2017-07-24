@@ -1,0 +1,58 @@
+# Canonical
+entity.entity_test_course.canonical:
+  path: '/entity_test/{entity_test_course}'
+  default:
+    # View controller from Entity
+    _entity_view: 'entity_test_course'
+    _title: 'Course Content'
+  requirements:
+    _entity_access: 'entity_test_course.view'
+
+# Collection GET ALL
+entity.entity_test_course.collection:
+  path: '/entity_test/list'
+  defaults:
+    # List Controller from Entity
+    _entity_list: 'entity_test_course'
+    _title: 'Course List'
+  requirements:
+    # Checking for permissions
+    _permission: 'view course entity'
+
+# Action
+entity_test.course_add:
+  path: '/entity_test/add'
+  defaults:
+    # Calls the form.add defined in the Course Entity
+    _entity_form: entity_test_course.add
+    _title: 'Add Course'
+  requirements:
+    _entity_create_acess: 'test_entity_course'
+
+# Form mapping with route_names for tasks
+entity.entity_test_course.edit_form:
+  path: '/entity_test/{entity_test_course}/edit'
+  default:
+    _entity_form: entity_test_course.edit
+    _title: 'Edit Course'
+  requirements:
+    _entity_access: 'test_entity_course.edit'
+
+entity.entity_test_course.delete_form:
+  path: '/entity_test/{entity_test_course}/delete'
+  default:
+    _entity_form: entity_test_course.delete
+    _title: 'delete Course'
+  requirements:
+    _entity_access: 'test_entity_course.delete'
+
+entity_test.course_settings:
+  path: 'admin/structure/entity_test_course_settings'
+  default:
+    _form: '\Drupal\cjgratacos\entity_test\Form\CourseSettingsForm'
+    _title: 'Course Settings'
+  requirements:
+    _entity_access: 'administer course entity'
+
+
+

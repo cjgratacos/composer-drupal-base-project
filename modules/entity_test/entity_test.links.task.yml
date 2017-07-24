@@ -1,0 +1,21 @@
+course.settings_tab:
+  route_name: entity_test.course_settings
+  title: Settings
+  base_route: entity_test.course_settings
+
+course.view:
+  route_name: entity.entity_test_course.canonical
+  base_route: entity.entity_test_course.canonical
+  title: View
+
+course.page_edit:
+  route_name: entity.entity_test_course.edit_form
+  base_route: entity.entity_test_course.canonical
+  title: Edit
+
+course.delete_confirm:
+  route_name: entity.entity_test_course.delete_form
+  base_route: entity.entity_test_course.canonical
+  title: Delete
+  weight: 10
+
