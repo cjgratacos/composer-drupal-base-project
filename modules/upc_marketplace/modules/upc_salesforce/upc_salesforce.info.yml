@@ -1,0 +1,5 @@
+name: UPC Salesforce
+type: module
+description: UPC Salesforce Module
+core: 8.x
+package: Internal

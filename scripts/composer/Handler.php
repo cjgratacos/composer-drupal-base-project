@@ -33,7 +33,6 @@ class Handler
         return Handler::getProjectRoot().'/bin/drush';
     }
 
-
     protected static function getDrupalConsole():string {
         return Handler::getProjectRoot().'/bin/drupal';
     }

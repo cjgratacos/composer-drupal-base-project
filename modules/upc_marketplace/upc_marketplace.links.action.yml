@@ -1,0 +1,10 @@
+# Action Links for the Module
+
+marketplace_item.add_item:
+  route_name: upc_marketplace.add_item
+  title: "Add Integration"
+  # Routes where the links will appear.
+  # They have to be defined route names.
+  appears_on:
+    - entity.marketplace_item.collection
+    - entity.marketplace_item.canonical

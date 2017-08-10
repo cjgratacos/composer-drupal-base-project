@@ -1,0 +1,17 @@
+entity.marketplace_item.collection:
+  title: "Marketplace List"
+  route_name: entity.upc_marketplace_item.collection
+  description: "List the Marketplace items"
+  weight: 10
+
+upc_marketplace.admin.structure.settings:
+  title: "Marketplace Settings"
+  description: "Configure Marketplace"
+  route_name: upc_marketplace.marketplace_settings
+  parent: system.admin_structure
+
+upc_marketplace.admin.content:
+  title: "Marketplace Content"
+  description: "Manage Marketplace Content"
+  route_name: upc_marketplace.marketplace_content
+  parent: system.admin_content

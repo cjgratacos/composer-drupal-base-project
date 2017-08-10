@@ -1,0 +1,8 @@
+name: UPC Marketplace
+type: module
+description: UPC Marketplace Module
+core: 8.x
+package: Internal
+dependencies:
+  - Taxonmy
+#  - upc_salesforce

@@ -1,0 +1,19 @@
+{
+  "name": "drupal/upc_marketplace",
+  "type": "drupal-module",
+  "description": "UPC Marketplace Module",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/upc_marketplace",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/upc_marketplace",
+    "source": "http://cgit.drupalcode.org/upc_marketplace"
+  },
+  "autoload": {
+    "psr-4": {
+      "Drupal\\upc_marketplace\\Marketplace\\": "src/"
+    }
+  },
+  "require": { }
+}

@@ -1,0 +1,11 @@
+view marketplace entity:
+  title: 'View Marketplace Entity'
+add marketplace entity:
+  title: 'Add Marketplace Entity'
+edit marketplace entity:
+  title: 'Edit Marketplace Entity'
+delete marketplace entity:
+  title: 'Delete Marketplace Entity'
+administer marketplace entity:
+  title: 'Administer Marketplace Entity'
+  restict access: TRUE

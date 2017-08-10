@@ -29,7 +29,18 @@
         "drush/config-extra": "^8.0@dev",
         "drupal/console":"~1.0",
         "drush/drush": "~8.0",
-        "consolidation/robo": "^1.0@dev"
+        "consolidation/robo": "^1.0@dev",
+        "drupal/group": "1.x-dev",
+        "drupal/adminimal_theme": "1.x-dev",
+        "drupal/field_group": "3.x-dev",
+        "drupal/extlink": "1.x-dev",
+        "drupal/block_visibility_groups": "1.x-dev",
+        "drupal/token": "1.x-dev",
+        "drupal/ctools": "3.x-dev",
+        "drupal/pathauto": "1.x-dev",
+        "drupal/admin_toolbar": "1.x-dev",
+        "drupal/bootstrap": "4.x-dev",
+        "drupal/graphql": "3.x-dev"
     },
     "require-dev":{
         "jcalderonzumba/gastonjs": "~1.0.2",
@@ -47,20 +58,17 @@
     "scripts": {
         "post-install-cmd": [
           "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-          "cjgratacos\\Deployment\\Composer\\Handler::createLinks"
+          "@composer generate:links"
         ],
+        "generate:links": "cjgratacos\\Deployment\\Composer\\Handler::createLinks",
         "dev:server:install": "cjgratacos\\Deployment\\Composer\\Handler::siteInstallDev",
         "dev:server:up": "cjgratacos\\Deployment\\Composer\\Handler::runServer",
         "dev:server:backup": "cjgratacos\\Deployment\\Composer\\Handler::backupDevServer",
         "dev:server:restore": "cjgratacos\\Deployment\\Composer\\Handler::restoreBackupDevServer",
         "dev:server:rmbackup": "cjgratacos\\Deployment\\Composer\\Handler::removeBackupDevServer",
         "test": "./vendor/bin/robo test",
-        "cmd:drush:cr":[
-          "cd web && ../bin/drush cr"
-        ],
-        "cmd:drupal:services":[
-          "cd web/ && ../bin/drupal debug:container"
-        ]
+        "cmd:drush":"cd web && ../bin/drush",
+        "cmd:drupal": "cd web && ../bin/drupal"
     },
     "extra": {
        "installer-paths": {
@@ -86,8 +94,8 @@
         "enable-patching":true,
         "dev:db":{
           "password": "password",
-          "driver":"sqlite",
-          "path":"sites/default/files/.ht.sqlite"
+          "driver": "mysql",
+          "path": "drupal:password@127.0.0.1:3336/drupal"
         },
         "dev:server:port": 8888
     },

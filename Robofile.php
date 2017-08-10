@@ -1,5 +1,5 @@
 <?php
 
-class Robofile {
-    
+class Robofile extends \Robo\Tasks {
+
 }

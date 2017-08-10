@@ -1,0 +1,11 @@
+<?php
+
+/**
+ * Require all import.php inside each direct child folder of the hooks folder.
+ * The pattern lies in that the import.php will have all
+ */
+$files = glob("hooks/**/import.php");
+
+foreach ($files as $include) {
+  require_once $include;
+}
