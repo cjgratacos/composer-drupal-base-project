@@ -40,7 +40,8 @@
         "drupal/pathauto": "1.x-dev",
         "drupal/admin_toolbar": "1.x-dev",
         "drupal/bootstrap": "4.x-dev",
-        "drupal/graphql": "3.x-dev"
+        "drupal/graphql": "3.x-dev",
+        "drupal/inline_entity_form": "1.x-dev"
     },
     "require-dev":{
         "jcalderonzumba/gastonjs": "~1.0.2",
@@ -95,7 +96,12 @@
         "dev:db":{
           "password": "password",
           "driver": "mysql",
-          "path": "drupal:password@127.0.0.1:3336/drupal"
+          "username-db": "drupal",
+          "password-db": "password",
+          "host-db": "127.0.0.1",
+          "port-db": "3336",
+          "name-db": "drupal",
+          "path": "sites/default/files/.ht.sqlite"
         },
         "dev:server:port": 8888
     },

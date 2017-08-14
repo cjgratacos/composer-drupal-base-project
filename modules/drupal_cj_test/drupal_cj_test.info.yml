@@ -1,5 +1,0 @@
-name: Drupal CJ Test
-description: Testing Drupal Core Concepts
-package: Learning
-type: module
-core: 8.x

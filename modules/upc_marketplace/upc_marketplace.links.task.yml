@@ -1,0 +1,22 @@
+# Marketplace Element Entity routing definition
+
+entity.mp_elem_ent.canonical:
+  route_name: entity.mp_elem_ent.canonical
+  base_route: entity.mp_elem_ent.canonical
+  title: 'View'
+
+entity.mp_elem_ent.edit_form:
+  route_name: entity.mp_elem_ent.edit_form
+  base_route: entity.mp_elem_ent.canonical
+  title: 'Edit'
+
+entity.mp_elem_ent.delete_form:
+  route_name:  entity.mp_elem_ent.delete_form
+  base_route:  entity.mp_elem_ent.canonical
+  title: Delete
+  weight: 10
+
+entity.mp_elem_ent.add_form:
+  route_name:  entity.mp_elem_ent.delete_form
+  base_route:  entity.mp_elem_ent.canonical
+  title: 'Add Marketplace Element Type'

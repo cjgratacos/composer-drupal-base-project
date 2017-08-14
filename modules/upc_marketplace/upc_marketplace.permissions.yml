@@ -1,11 +1,22 @@
-view marketplace entity:
-  title: 'View Marketplace Entity'
-add marketplace entity:
-  title: 'Add Marketplace Entity'
-edit marketplace entity:
-  title: 'Edit Marketplace Entity'
-delete marketplace entity:
-  title: 'Delete Marketplace Entity'
-administer marketplace entity:
-  title: 'Administer Marketplace Entity'
-  restict access: TRUE
+add marketplace element entity:
+  title: 'Create new Marketplace Element Entity'
+
+administer marketplace element entity:
+  title: 'Administer Marketplace Element Entity'
+  description: 'Allow to access the administration form to configure Marketplace Element Entity.'
+  restrict access: true
+
+delete marketplace element entity:
+  title: 'Delete Marketplace Element Entity'
+
+edit marketplace element entity:
+  title: 'Edit Marketplace Element Entity'
+
+access marketplace element entity overview:
+  title: 'Access the Marketplace Element Entity overview page'
+
+view published marketplace element entity:
+  title: 'View published Marketplace Element Entity'
+
+view unpublished marketplace element entity:
+  title: 'View unpublished Marketplace Element Entity'

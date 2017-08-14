@@ -1,11 +1,61 @@
 <?php
 
 /**
- * Require all import.php inside each direct child folder of the hooks folder.
- * The pattern lies in that the import.php will have all
+ * @file
+ * Contains upc_marketplace.module.
  */
-$files = glob("hooks/**/import.php");
 
-foreach ($files as $include) {
-  require_once $include;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function upc_marketplace_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the upc_marketplace module.
+    case 'help.page.upc_marketplace':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('UPC Marketplace') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function upc_marketplace_theme() {
+  $theme = [];
+  $theme[ 'upc_marketplace'] = [
+    'render element' => 'children',
+  ];
+  $theme['mp_elem_ent'] = [
+    'render element' => 'elements',
+    'file' => 'mp_elem_ent.page.inc',
+    'template' => 'mp_elem_ent',
+  ];
+  $theme['mp_elem_ent_content_add_list'] = [
+    'render element' => 'content',
+    'variables' => ['content' => NULL],
+    'file' => 'mp_elem_ent.page.inc',
+  ];
+  return $theme;
+}
+
+/**
+* Implements hook_theme_suggestions_HOOK().
+*/
+function upc_marketplace_theme_suggestions_mp_elem_ent(array $variables) {
+  $suggestions = [];
+  $entity = $variables['elements']['#mp_elem_ent'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'mp_elem_ent__' . $sanitized_view_mode;
+  $suggestions[] = 'mp_elem_ent__' . $entity->bundle();
+  $suggestions[] = 'mp_elem_ent__' . $entity->bundle() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'mp_elem_ent__' . $entity->id();
+  $suggestions[] = 'mp_elem_ent__' . $entity->id() . '__' . $sanitized_view_mode;
+  return $suggestions;
 }

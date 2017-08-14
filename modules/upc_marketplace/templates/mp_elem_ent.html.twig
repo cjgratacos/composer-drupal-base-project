@@ -1,0 +1,22 @@
+{#
+/**
+ * @file mp_elem_ent.html.twig
+ * Default theme implementation to present Marketplace Element Entity data.
+ *
+ * This template is used when viewing Marketplace Element Entity pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_mp_elem_ent()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('mp_elem_ent') }}>
+  {% if content %}
+    {{- content -}}
+  {% endif %}
+</div>

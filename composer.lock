@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3ae233c4ee80914e687d2436467f7eb4",
+    "content-hash": "c1ccf8723c7fdf3e7b97a78fc42536d3",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -1342,47 +1342,6 @@
             "time": "2017-05-05T21:26:28+00:00"
         },
         {
-            "name": "drupal/adaptivetheme",
-            "version": "dev-2.x",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupal.org/project/adaptivetheme",
-                "reference": "f8e134dd37361a5fb253776a13b5f27ce1cd7323"
-            },
-            "require": {
-                "drupal/core": "~8.0"
-            },
-            "type": "drupal-theme",
-            "extra": {
-                "branch-alias": {
-                    "dev-2.x": "2.x-dev"
-                },
-                "drupal": {
-                    "version": "8.x-2.0+5-dev",
-                    "datestamp": "1488919083",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Dev releases are not covered by Drupal security advisories."
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Jeff Burnz",
-                    "homepage": "https://www.drupal.org/user/61393"
-                }
-            ],
-            "homepage": "https://www.drupal.org/project/adaptivetheme",
-            "support": {
-                "source": "http://cgit.drupalcode.org/adaptivetheme"
-            },
-            "time": "2017-08-09 22:00:23"
-        },
-        {
             "name": "drupal/admin_toolbar",
             "version": "dev-1.x",
             "source": {
@@ -1481,56 +1440,6 @@
                 "source": "http://cgit.drupalcode.org/adminimal_theme"
             },
             "time": "2017-07-08 17:49:05"
-        },
-        {
-            "name": "drupal/at_tools",
-            "version": "dev-2.x",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupal.org/project/at_tools",
-                "reference": "9a2955ac12e46516a2824875b3ae5840583a768c"
-            },
-            "require": {
-                "drupal/core": "~8.0"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "branch-alias": {
-                    "dev-2.x": "2.x-dev"
-                },
-                "drupal": {
-                    "version": "8.x-2.0+1-dev",
-                    "datestamp": "1488858784",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Project has not opted into security advisory coverage!"
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Jeff Burnz",
-                    "homepage": "http://adaptivethemes.com/",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "Tools to support Adaptivetheme and sub-themes.",
-            "homepage": "https://www.drupal.org/project/at_tools",
-            "keywords": [
-                "adaptivetheme",
-                "base theme",
-                "drupal",
-                "theme"
-            ],
-            "support": {
-                "source": "https://www.drupal.org/project/at_tools",
-                "issues": "http://drupal.org/project/issues/at_tools"
-            },
-            "time": "2017-08-09 21:35:42"
         },
         {
             "name": "drupal/block_visibility_groups",
@@ -2392,6 +2301,67 @@
                 "source": "http://cgit.drupalcode.org/group"
             },
             "time": "2017-06-06 12:09:13"
+        },
+        {
+            "name": "drupal/inline_entity_form",
+            "version": "dev-1.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/inline_entity_form",
+                "reference": "dbfc93fc961b3e6c84497390c62ec36d02c1c4d7"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "require-dev": {
+                "drupal/entity_reference_revisions": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-beta1+2-dev",
+                    "datestamp": "1479155639",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Dev releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "bojanz",
+                    "homepage": "https://www.drupal.org/user/86106"
+                },
+                {
+                    "name": "dawehner",
+                    "homepage": "https://www.drupal.org/user/99340"
+                },
+                {
+                    "name": "rszrama",
+                    "homepage": "https://www.drupal.org/user/49344"
+                },
+                {
+                    "name": "slashrsm",
+                    "homepage": "https://www.drupal.org/user/744628"
+                },
+                {
+                    "name": "webflo",
+                    "homepage": "https://www.drupal.org/user/254778"
+                }
+            ],
+            "description": "Provides a widget for inline management (creation, modification, removal) of referenced entities.",
+            "homepage": "https://www.drupal.org/project/inline_entity_form",
+            "support": {
+                "source": "http://cgit.drupalcode.org/inline_entity_form"
+            },
+            "time": "2016-11-14 20:32:26"
         },
         {
             "name": "drupal/jsonapi",
@@ -6578,6 +6548,47 @@
             "time": "2017-02-06 09:59:54"
         },
         {
+            "name": "drupal/adaptivetheme",
+            "version": "dev-2.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/adaptivetheme",
+                "reference": "f8e134dd37361a5fb253776a13b5f27ce1cd7323"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-theme",
+            "extra": {
+                "branch-alias": {
+                    "dev-2.x": "2.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-2.0+5-dev",
+                    "datestamp": "1488919083",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Dev releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Jeff Burnz",
+                    "homepage": "https://www.drupal.org/user/61393"
+                }
+            ],
+            "homepage": "https://www.drupal.org/project/adaptivetheme",
+            "support": {
+                "source": "http://cgit.drupalcode.org/adaptivetheme"
+            },
+            "time": "2017-08-09 22:00:23"
+        },
+        {
             "name": "drupal/admin_menu",
             "version": "dev-3.x",
             "source": {
@@ -6634,6 +6645,56 @@
                 "source": "http://cgit.drupalcode.org/admin_menu"
             },
             "time": "2015-03-20 18:23:09"
+        },
+        {
+            "name": "drupal/at_tools",
+            "version": "dev-2.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/at_tools",
+                "reference": "9a2955ac12e46516a2824875b3ae5840583a768c"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-2.x": "2.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-2.0+1-dev",
+                    "datestamp": "1488858784",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Jeff Burnz",
+                    "homepage": "http://adaptivethemes.com/",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Tools to support Adaptivetheme and sub-themes.",
+            "homepage": "https://www.drupal.org/project/at_tools",
+            "keywords": [
+                "adaptivetheme",
+                "base theme",
+                "drupal",
+                "theme"
+            ],
+            "support": {
+                "source": "https://www.drupal.org/project/at_tools",
+                "issues": "http://drupal.org/project/issues/at_tools"
+            },
+            "time": "2017-08-09 21:35:42"
         },
         {
             "name": "drupal/devel",
@@ -6989,9 +7050,8 @@
         "drupal/pathauto": 20,
         "drupal/admin_toolbar": 20,
         "drupal/bootstrap": 20,
-        "drupal/adaptivetheme": 20,
-        "drupal/at_tools": 20,
         "drupal/graphql": 20,
+        "drupal/inline_entity_form": 20,
         "drupal/devel": 20,
         "drupal/examples": 20
     },

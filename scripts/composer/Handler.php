@@ -11,8 +11,7 @@ use Composer\Script\Event;
 
 class Handler
 {
-    private const BACKUP_PATH = "~/.drupal-sqlite-backup";
-    private const BACKUP_FULL_PATH = Handler::BACKUP_PATH . '/backup.sqlite';
+    private const BACKUP_PATH = "drupal-backup";
 
     protected static function getProjectRoot():string {
         return getcwd();
@@ -81,8 +80,19 @@ class Handler
         $fs = new Filesystem();
         $fs->remove($drupalRoot .'/'. $dev_db['path']);
 
+
+        switch ($dev_db['driver']){
+          case 'sqlite':
+            $uri = "${dev_db['driver']}://${dev_db['path']}";
+            break;
+          case 'mysql':
+            $uri = "${dev_db['driver']}://${dev_db['username-db']}:${dev_db['password-db']}@${dev_db['host-db']}:${dev_db['port-db']}/${dev_db['name-db']}";
+            break;
+          default:
+            throw new InvalidArgumentException("Invalid Driver, can install site only with sqlite or mysql drivers.",1);
+        }
         // Create new Process instance that is going to run the `drush si` with an sqlite db
-        $process = new Process("$drush si --db-url=${dev_db['driver']}://${dev_db['path']} --account-pass=${dev_db['password']} -y", $drupalRoot);
+        $process = new Process("$drush si --db-url=${uri} --account-pass=${dev_db['password']} -y", $drupalRoot);
 
         // Remove the default 60 sec timeout
         $process->setTimeout(null);
@@ -140,19 +150,34 @@ class Handler
         // Getting the Dev DB
         $dev_db = $extra['dev:db'];
 
-        if ($dev_db['driver'] !== "sqlite") {
-            throw new InvalidArgumentException("Only supporting SQLite backup at the moment.",1);
+      $fs = new Filesystem();
+
+      $drupalRoot = Handler::getDrupalRoot();
+
+
+      $fs->remove(Handler::BACKUP_PATH);
+      $fs->mkdir(Handler::BACKUP_PATH);
+      $fs->chmod(Handler::BACKUP_PATH, 0755);
+      switch ($dev_db['driver']){
+        case 'sqlite':
+          $fs->copy($dev_db['path'], Handler::BACKUP_PATH . '/backup.sqlite');
+          break;
+        case 'mysql':
+          $process = new Process("mysqldump  --user=${dev_db['username-db']} --password=${dev_db['password-db']} --host=${dev_db['host-db']} --port=${dev_db['port-db']} --result-file=backup.sql ${dev_db['name-db']}", Handler::BACKUP_PATH );
+          $process->setTimeout(null);
+         $process->run(function ($type, $buffer){
+           echo "INFO[$type]: ".$buffer;
+         });
+
+        if (!$process->isSuccessful()) {
+          throw new ProcessFailedException($process);
+        }
+          break;
+          default:
+          throw new InvalidArgumentException("Only supporting SQLite or MySQL backups at the moment.",1);
         }
 
-        $fs = new Filesystem();
-
-        $drupalRoot = Handler::getDrupalRoot();
-
-        $fs->remove(Handler::BACKUP_PATH);
-        $fs->mkdir(Handler::BACKUP_PATH);
-        $fs->copy($dev_db['path'], Handler::BACKUP_FULL_PATH);
-
-        echo "Finished backing up ${dev_db['path']} to ".Handler::BACKUP_FULL_PATH ;
+        echo "Finished backing up ${dev_db['driver']} db to ".Handler::BACKUP_PATH ;
     }
 
     public static function restoreBackupDevServer(Event $event):void {
@@ -168,32 +193,34 @@ class Handler
         // Getting the Dev DB
         $dev_db = $extra['dev:db'];
 
-        if ($dev_db['driver'] !== "sqlite") {
-            throw new InvalidArgumentException("Only supporting SQLite restore at the moment.",1);
-        }
-
         $fs = new Filesystem();
 
-        if ($fs->exists(Handler::BACKUP_FULL_PATH)) {
-            throw new FileException("File ".Handler::BACKUP_FULL_PATH." doesn't exist, unable to restore backup",1);
+        if ($fs->exists(Handler::BACKUP_PATH)) {
+          throw new FileException("Folder ".Handler::BACKUP_PATH." doesn't exist, unable to restore backup",1);
         }
 
         $drupalRoot = Handler::getDrupalRoot();
 
-        $fs->copy(Handler::BACKUP_FULL_PATH, $dev_db['path']);
+        switch ($dev_db['driver']){
+          case 'sqlite':
+            $fs->copy(Handler::BACKUP_FULL_PATH . '/backup.sqlite', $dev_db['path']);
+            break;
+          case 'mysql':
+            $process = new Process("mysql  --user=${dev_db['username-db']} --password=${dev_db['password-db']} --host=${dev_db['host-db']} --port=${dev_db['port-db']} --database=${dev_db['name-db']} < backup.sql", Handler::BACKUP_PATH );
+            $process->setTimeout(null);
+            $process->run();
+            break;
+          default:
+            throw new InvalidArgumentException("Only supporting SQLite or MySQL backups at the moment.",1);
+        }
+
         $fs->remove(Handler::BACKUP_PATH);
 
-        echo "Finished restoring ". Handler::BACKUP_FULL_PATH." to ${dev_db['path']}";
+      echo "Finished restoring ". Handler::BACKUP_FULL_PATH." to ${dev_db['path']}";
     }
 
     public static function removeBackupDevServer():void {
         $fs = new Filesystem();
         $fs->remove(Handler::BACKUP_PATH);
-        if ($fs->exists(Handler::BACKUP_FULL_PATH)) {
-            $fs->remove(Handler::BACKUP_PATH);
-            echo "Backup found and removed";
-        } else {
-            echo "No backup was found";
-        }
     }
 }
