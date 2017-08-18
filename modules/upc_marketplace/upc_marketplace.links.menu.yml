@@ -1,7 +1,0 @@
-# Marketplace Element Entity type menu items definition
-entity.mp_elem_ent_type.collection:
-  title: 'Marketplace Element Type'
-  route_name: entity.mp_elem_ent_type.collection
-  description: 'List Marketplace Element Entity Type'
-  parent: system.admin_structure
-  weight: 99

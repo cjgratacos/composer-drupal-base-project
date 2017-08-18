@@ -29,7 +29,6 @@
         "drush/config-extra": "^8.0@dev",
         "drupal/console":"~1.0",
         "drush/drush": "~8.0",
-        "consolidation/robo": "^1.0@dev",
         "drupal/group": "1.x-dev",
         "drupal/adminimal_theme": "1.x-dev",
         "drupal/field_group": "3.x-dev",
@@ -41,7 +40,9 @@
         "drupal/admin_toolbar": "1.x-dev",
         "drupal/bootstrap": "4.x-dev",
         "drupal/graphql": "3.x-dev",
-        "drupal/inline_entity_form": "1.x-dev"
+        "drupal/paragraphs": "1.x-dev",
+        "drupal/entity_reference_revisions": "1.x-dev",
+        "drupal/panelizer": "4.x-dev"
     },
     "require-dev":{
         "jcalderonzumba/gastonjs": "~1.0.2",
