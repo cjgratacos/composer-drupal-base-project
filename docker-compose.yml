@@ -1,14 +1,35 @@
 version: '2'
-                   services:
-                     drupal_db:
-                       image: mariadb:10.3
-                       environment:
-                         MYSQL_USER: drupal
-                         MYSQL_PASSWORD: password
-                         MYSQL_DATABASE: drupal
-                         MYSQL_ROOT_PASSWORD: password
-                       expose:
-                         - "3306"
-                       ports:
-                         - "3336:3306"
-                       restart: always
+services:
+  web:
+    build:
+      context: ./docker/
+      args:
+        DRUPAL_PROFILE: standard
+        DRUPAL_SITE_NAME: Drupal Website
+        DRUPAL_USER: admin
+        DRUPAL_PASS: admin
+        DRUPAL_DB_USER: drupal
+        DRUPAL_DB_PASS: password
+        DRUPAL_DB_HOST: mysql
+        DRUPAL_DB_PORT: 3306
+        DRUPAL_DB_NAME: drupal
+    ports:
+      - "80:80"
+    volumes:
+      - ./drupal/:/var/www/drupal
+    links:
+      - drupal_db:mysql
+    working_dir: /var/www/drupal
+    restart: always
+  drupal_db:
+   image: mariadb:10.3
+   environment:
+     MYSQL_USER: drupal
+     MYSQL_PASSWORD: password
+     MYSQL_DATABASE: drupal
+     MYSQL_ROOT_PASSWORD: password
+   expose:
+     - "3306"
+   ports:
+     - "3336:3306"
+   restart: always

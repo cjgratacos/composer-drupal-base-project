@@ -33,11 +33,11 @@ class Provider {
    */
   public function __construct() {
     // Project root
-    $this->projectRoot = getcwd();
+    $this->projectRoot = getcwd().'/drupal';
     // Backup Path
     $this->backupPath = "drupal-backup";
     // Drupal Root Folder Name
-    $this->drupalRootFolderName = '/web';
+    $this->drupalRootFolderName = './drupal/web';
     // Drupal Root Directory
     $this->drupalRoot = $this->projectRoot . $this->drupalRootFolderName;
     // Project bin directory
@@ -86,10 +86,7 @@ class Provider {
    */
   public function getFoldersList(array $folderArray):array {
 
-    return $this->attachPrefixBasePathToFolderMap(
-      $this->projectRoot,
-      $this->generateSystemToDrupalFolderMapping($folderArray)
-    );
+    return $this->generateSystemToDrupalFolderMapping($folderArray);
   }
 
   /**

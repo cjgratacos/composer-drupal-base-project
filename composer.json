@@ -68,28 +68,27 @@
         "dev:server:backup": "cjgratacos\\Deployment\\Composer\\Handler::backupDevServer",
         "dev:server:restore": "cjgratacos\\Deployment\\Composer\\Handler::restoreBackupDevServer",
         "dev:server:rmbackup": "cjgratacos\\Deployment\\Composer\\Handler::removeBackupDevServer",
-        "test": "./vendor/bin/robo test",
-        "cmd:drush":"cd web && ../bin/drush",
-        "cmd:drupal": "cd web && ../bin/drupal"
+        "cmd:drush":"cd drupal/web && ../bin/drush",
+        "cmd:drupal": "cd drupal/web && ../bin/drupal"
     },
     "extra": {
        "installer-paths": {
-      "web/core": [
+      "drupal/web/core": [
         "type:drupal-core"
       ],
-      "web/libraries/{$name}":[
+      "drupal/web/libraries/{$name}":[
           "type:drupal-library"
       ],
-      "web/modules/contrib/{$name}": [
+      "drupal/web/modules/contrib/{$name}": [
         "type:drupal-module"
       ],
-      "web/profiles/contrib/{$name}": [
+      "drupal/web/profiles/contrib/{$name}": [
         "type:drupal-profile"
       ],
-      "web/themes/contrib/{$name}": [
+      "drupal/web/themes/contrib/{$name}": [
         "type:drupal-theme"
       ],
-      "web/contrib/{$name}": [
+      "drupal/web/contrib/{$name}": [
         "type:drupal-drush"
       ]
     },
@@ -108,17 +107,18 @@
       },
       "project-files-drupal-mapping": {
         "modules": {
-          "project":"/modules",
+          "project":"../../modules",
           "drupal":"/modules/internal"
         },
         "themes": {
-          "project":"/themes",
+          "project":"../../themes",
           "drupal":"/themes/internal"
         }
       },
       "dev:server:port": 8888
     },
     "config": {
-        "bin-dir": "bin/"
+        "bin-dir": "drupal/bin/",
+        "vendor-dir": "drupal/vendor"
     }
 }
