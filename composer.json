@@ -21,8 +21,8 @@
         "cweagans/composer-patches": "^1.5.0",
         "composer/installers": "1.2.0",
         "drupal-composer/drupal-scaffold": "^2.0.0",
-        "drupal/core": "^8.3.4",
-        "webflo/drupal-core-strict": "^8.3.4",
+        "drupal/core": "~8.3",
+        "webflo/drupal-core-strict": "8.3.7",
         "drupal/openapi": "1.0.0-alpha1",
         "drupal/jsonapi": "1.0.0",
         "drupal/simple_oauth": "2.0-rc2",
@@ -94,17 +94,29 @@
       ]
     },
         "enable-patching":true,
-        "dev:db":{
-          "password": "password",
-          "driver": "mysql",
-          "username-db": "drupal",
-          "password-db": "password",
-          "host-db": "127.0.0.1",
-          "port-db": "3336",
-          "name-db": "drupal",
-          "path": "sites/default/files/.ht.sqlite"
+      "dev:db":{
+        "driver": "mysql",
+        "username": "drupal",
+        "password": "password",
+        "host": "127.0.0.1",
+        "port": "3336",
+        "name": "drupal",
+        "path": "sites/default/files/.ht.sqlite"
+      },
+      "drupal:site:config": {
+        "password": "password"
+      },
+      "project-files-drupal-mapping": {
+        "modules": {
+          "project":"/modules",
+          "drupal":"/modules/internal"
         },
-        "dev:server:port": 8888
+        "themes": {
+          "project":"/themes",
+          "drupal":"/themes/internal"
+        }
+      },
+      "dev:server:port": 8888
     },
     "config": {
         "bin-dir": "bin/"

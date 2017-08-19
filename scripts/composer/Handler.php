@@ -4,223 +4,146 @@ namespace cjgratacos\Deployment\Composer;
 
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use Composer\Script\Event;
 
 class Handler
 {
-    private const BACKUP_PATH = "drupal-backup";
+  public static function createLinks(Event $event):void{
 
-    protected static function getProjectRoot():string {
-        return getcwd();
+    $extra = $event->getComposer()->getPackage()->getExtra();
+
+    if (!isset($extra['project-files-drupal-mapping']) || !is_array($extra['project-files-drupal-mapping'])) {
+      throw new InvalidArgumentException("The parameter 'project-files-drupal-mapping' needs to be configured through the extra.project-files-drupal-mapping settings",1);
     }
 
-    protected static function getDrupalRoot():string {
-        return Handler::getProjectRoot().'/web';
+    $provider = new Provider();
+    $sourceDestMap = $provider->getFoldersList($extra['project-files-drupal-mapping']);
+
+    $fs = new Filesystem();
+
+    foreach ($sourceDestMap as $src=>$dest) {
+      echo "Creating Link from[$src] to [$dest]".PHP_EOL;
+      $fs->remove($dest);
+      $fs->symlink($src,$dest);
+    }
+  }
+
+  public static function siteInstallDev(Event $event):void{
+    // Get extra's that are in the composer.json
+    $extra = $event->getComposer()->getPackage()->getExtra();
+
+    //  Validation that dev:db is in extra and that is a string
+    if (!isset($extra['dev:db']) || !is_array($extra['dev:db'])) {
+      throw new InvalidArgumentException("The parameter 'dev:db' needs to be configured through the extra.dev:db settings",1);
+    }
+    if (!isset($extra['drupal:site:config']) || !is_array($extra['drupal:site:config']) || !isset($extra['drupal:site:config']['password'])) {
+      throw new InvalidArgumentException("The parameter 'drupal:site:config' needs to be configured through the extra.drupal:site:config.password settings",1);
     }
 
-    protected static function getFoldersList():array {
-        return [
-            "themes",
-            "modules"
-        ];
+    // Getting the Dev DB
+    $devDb = $extra['dev:db'];
+    $sitePassword = $extra['drupal:site:config']['password'];
+    $provider = new Provider();
+    $provider->validateDBConfig($devDb);
+
+    // Get common folders
+    $drush = $provider->getDrush();
+    $drupalRoot = $provider->getDrupalRoot();
+
+    $uri = $provider->generateDBConnectionString($devDb);
+    $provider->clearDbFiles($devDb);
+
+    // Create new Process instance that is going to run the `drush si` with an sqlite db
+    $process = new Process("$drush si --db-url=${uri} --account-pass=${sitePassword} -y", $drupalRoot);
+
+    // Remove the default 60 sec timeout
+    $process->setTimeout(null);
+    $process->enableOutput();
+
+    // Run Process
+    $process->run(function ($type, $buffer){
+      echo "INFO[$type]: ".$buffer;
+    });
+
+    if (!$process->isSuccessful()) {
+      throw new ProcessFailedException($process);
+    }
+  }
+
+  public static function runServer(Event $event):void{
+    // Get extra's that are in the composer.json
+    $extra = $event->getComposer()->getPackage()->getExtra();
+
+    //  Validation that dev:server:port is in extra and that is a string
+    if (!isset($extra['dev:server:port']) || !is_scalar($extra['dev:server:port'])) {
+      throw new InvalidArgumentException("The parameter 'db-pass' needs to be configured through the extra.dev:server:port settings and it most be a scalar",1);
     }
 
-    protected static function getDrush():string {
-        return Handler::getProjectRoot().'/bin/drush';
+    // Get commons
+    $provider = new Provider();
+    $drush = $provider->getDrush();
+    $drupalRoot = $provider->getDrupalRoot();
+
+    // Create new Process instance that is going to run the `drush rs
+    $process = new Process("$drush rs ${extra['dev:server:port']} ./", $drupalRoot);
+
+    // Remove the default 60 sec timeout
+    $process->setTimeout(null);
+
+    // Run Process
+    $process->run(function ($type, $buffer){
+      echo "INFO[$type]: ".$buffer;
+    });
+
+    if (!$process->isSuccessful()) {
+      throw new ProcessFailedException($process);
+    }
+  }
+
+  public static function backupDevServer(Event $event):void {
+    // Get extra's that are in the composer.json
+    $extra = $event->getComposer()->getPackage()->getExtra();
+
+    //  Validation that db:pass is in extra and that is a string
+    if (!isset($extra['dev:db']) || !is_array($extra['dev:db'])) {
+      throw new InvalidArgumentException("The parameter 'dev:db' needs to be configured through the extra.dev:db settings",1);
     }
 
-    protected static function getDrupalConsole():string {
-        return Handler::getProjectRoot().'/bin/drupal';
+    // Get Provider
+    $provider = new Provider();
+
+    // Getting the Dev DB
+    $devDb = $extra['dev:db'];
+
+    $provider->validateDBConfig($devDb);
+
+    $provider->backupDb($devDb);
+
+    echo "Finished backing up ${$devDb['driver']} db to ".$provider->backupPath() ;
+  }
+
+  public static function restoreBackupDevServer(Event $event):void {
+    // Get extra's that are in the composer.json
+    $extra = $event->getComposer()->getPackage()->getExtra();
+
+    //  Validation that db:pass is in extra and that is a string
+    if (!isset($extra['dev:db']) || !is_array($extra['dev:db'])) {
+      throw new InvalidArgumentException("The parameter 'dev:db' needs to be configured through the extra.dev:db settings",1);
     }
 
-    protected static function attachPrefixBasePathToFolderList(string $basePath, string $suffixFolder = null):array {
+    // Getting the Dev DB
+    $devDb = $extra['dev:db'];
+    $provider = new Provider();
 
-        $folders = Handler::getFoldersList();
-        $suffixFolder = $suffixFolder?:'';
-        return array_map(function (string $folder) use ($basePath,$suffixFolder){
-            return $basePath . '/' . $folder . $suffixFolder;
-        },$folders);
-    }
+    $provider->restoreBackup($devDb);
 
-    public static function createLinks():void{
-        $sourceDestMap = array_combine(
-            Handler::attachPrefixBasePathToFolderList(Handler::getProjectRoot()),
-            Handler::attachPrefixBasePathToFolderList(Handler::getDrupalRoot(), '/dev')
-        );
+    echo "Finished restoring DB Backup.";
+  }
 
-        $fs = new Filesystem();
-
-        foreach ($sourceDestMap as $src=>$dest) {
-            echo "Creating Link from[$src] to [$dest]".PHP_EOL;
-            $fs->remove($dest);
-            $fs->symlink($src,$dest);
-        }
-    }
-
-    public static function siteInstallDev(Event $event):void{
-        // Get extra's that are in the composer.json
-        $extra = $event->getComposer()->getPackage()->getExtra();
-
-        //  Validation that db:pass is in extra and that is a string
-        // TODO: Make extra db configurable
-        if (!isset($extra['dev:db']) || !is_array($extra['dev:db'])) {
-            throw new InvalidArgumentException("The parameter 'dev:db' needs to be configured through the extra.dev:db settings",1);
-        }
-
-        // Getting the Dev DB
-        $dev_db = $extra['dev:db'];
-
-        // Get common folders
-        $drush = Handler::getDrush();
-        $drupalRoot = Handler::getDrupalRoot();
-
-        $fs = new Filesystem();
-        $fs->remove($drupalRoot .'/'. $dev_db['path']);
-
-
-        switch ($dev_db['driver']){
-          case 'sqlite':
-            $uri = "${dev_db['driver']}://${dev_db['path']}";
-            break;
-          case 'mysql':
-            $uri = "${dev_db['driver']}://${dev_db['username-db']}:${dev_db['password-db']}@${dev_db['host-db']}:${dev_db['port-db']}/${dev_db['name-db']}";
-            break;
-          default:
-            throw new InvalidArgumentException("Invalid Driver, can install site only with sqlite or mysql drivers.",1);
-        }
-        // Create new Process instance that is going to run the `drush si` with an sqlite db
-        $process = new Process("$drush si --db-url=${uri} --account-pass=${dev_db['password']} -y", $drupalRoot);
-
-        // Remove the default 60 sec timeout
-        $process->setTimeout(null);
-        $process->enableOutput();
-        // Run Process
-        $process->run(function ($type, $buffer){
-            echo "INFO[$type]: ".$buffer;
-        });
-
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-    }
-
-    public static function runServer(Event $event):void{
-        // Get extra's that are in the composer.json
-        $extra = $event->getComposer()->getPackage()->getExtra();
-
-        //  Validation that dev:server:port is in extra and that is a string
-        // TODO: Make extra db configurable
-        if (!isset($extra['dev:server:port']) || !is_scalar($extra['dev:server:port'])) {
-            throw new InvalidArgumentException("The parameter 'db-pass' needs to be configured through the extra.dev:server:port settings and it most be a scalar",1);
-        }
-
-        // Get common folders
-        $drush = Handler::getDrush();
-        $drupalRoot = Handler::getDrupalRoot();
-
-        // Create new Process instance that is going to run the `drush rs
-        $process = new Process("$drush rs ${extra['dev:server:port']} ./", $drupalRoot);
-
-        // Remove the default 60 sec timeout
-        $process->setTimeout(null);
-
-        // Run Process
-        $process->run(function ($type, $buffer){
-            echo "INFO[$type]: ".$buffer;
-        });
-
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-    }
-
-    public static function backupDevServer(Event $event):void {
-        // Get extra's that are in the composer.json
-        $extra = $event->getComposer()->getPackage()->getExtra();
-
-        //  Validation that db:pass is in extra and that is a string
-        // TODO: Make extra db configurable
-        if (!isset($extra['dev:db']) || !is_array($extra['dev:db'])) {
-            throw new InvalidArgumentException("The parameter 'dev:db' needs to be configured through the extra.dev:db settings",1);
-        }
-
-        // Getting the Dev DB
-        $dev_db = $extra['dev:db'];
-
-      $fs = new Filesystem();
-
-      $drupalRoot = Handler::getDrupalRoot();
-
-
-      $fs->remove(Handler::BACKUP_PATH);
-      $fs->mkdir(Handler::BACKUP_PATH);
-      $fs->chmod(Handler::BACKUP_PATH, 0755);
-      switch ($dev_db['driver']){
-        case 'sqlite':
-          $fs->copy($dev_db['path'], Handler::BACKUP_PATH . '/backup.sqlite');
-          break;
-        case 'mysql':
-          $process = new Process("mysqldump  --user=${dev_db['username-db']} --password=${dev_db['password-db']} --host=${dev_db['host-db']} --port=${dev_db['port-db']} --result-file=backup.sql ${dev_db['name-db']}", Handler::BACKUP_PATH );
-          $process->setTimeout(null);
-         $process->run(function ($type, $buffer){
-           echo "INFO[$type]: ".$buffer;
-         });
-
-        if (!$process->isSuccessful()) {
-          throw new ProcessFailedException($process);
-        }
-          break;
-          default:
-          throw new InvalidArgumentException("Only supporting SQLite or MySQL backups at the moment.",1);
-        }
-
-        echo "Finished backing up ${dev_db['driver']} db to ".Handler::BACKUP_PATH ;
-    }
-
-    public static function restoreBackupDevServer(Event $event):void {
-        // Get extra's that are in the composer.json
-        $extra = $event->getComposer()->getPackage()->getExtra();
-
-        //  Validation that db:pass is in extra and that is a string
-        // TODO: Make extra db configurable
-        if (!isset($extra['dev:db']) || !is_array($extra['dev:db'])) {
-            throw new InvalidArgumentException("The parameter 'dev:db' needs to be configured through the extra.dev:db settings",1);
-        }
-
-        // Getting the Dev DB
-        $dev_db = $extra['dev:db'];
-
-        $fs = new Filesystem();
-
-        if ($fs->exists(Handler::BACKUP_PATH)) {
-          throw new FileException("Folder ".Handler::BACKUP_PATH." doesn't exist, unable to restore backup",1);
-        }
-
-        $drupalRoot = Handler::getDrupalRoot();
-
-        switch ($dev_db['driver']){
-          case 'sqlite':
-            $fs->copy(Handler::BACKUP_FULL_PATH . '/backup.sqlite', $dev_db['path']);
-            break;
-          case 'mysql':
-            $process = new Process("mysql  --user=${dev_db['username-db']} --password=${dev_db['password-db']} --host=${dev_db['host-db']} --port=${dev_db['port-db']} --database=${dev_db['name-db']} < backup.sql", Handler::BACKUP_PATH );
-            $process->setTimeout(null);
-            $process->run();
-            break;
-          default:
-            throw new InvalidArgumentException("Only supporting SQLite or MySQL backups at the moment.",1);
-        }
-
-        $fs->remove(Handler::BACKUP_PATH);
-
-      echo "Finished restoring ". Handler::BACKUP_FULL_PATH." to ${dev_db['path']}";
-    }
-
-    public static function removeBackupDevServer():void {
-        $fs = new Filesystem();
-        $fs->remove(Handler::BACKUP_PATH);
-    }
+  public static function removeBackupDevServer():void {
+    $provider = new Provider();
+    $provider->removeBackup();
+  }
 }
