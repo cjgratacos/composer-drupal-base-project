@@ -121,7 +121,7 @@ class Handler
 
     $provider->backupDb($devDb);
 
-    echo sprintf("Finished backing up %s db to %s", $devDb['driver'],$provider->backupPath());
+    echo sprintf("Finished backing up `%s` db to `%s`.".PHP_EOL, $devDb['driver'],$provider->backupPath());
   }
 
   public static function restoreBackupDevServer(Event $event):void {
@@ -139,7 +139,7 @@ class Handler
 
     $provider->restoreBackup($devDb);
 
-    echo "Finished restoring DB Backup.";
+    echo sprintf("Finished restoring `%s` DB Backup.".PHP_EOL, $devDb['driver']);
   }
 
   public static function removeBackupDevServer():void {
