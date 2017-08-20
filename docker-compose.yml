@@ -1,14 +1,14 @@
 version: '2'
-                   services:
-                     drupal_db:
-                       image: mariadb:10.3
-                       environment:
-                         MYSQL_USER: drupal
-                         MYSQL_PASSWORD: password
-                         MYSQL_DATABASE: drupal
-                         MYSQL_ROOT_PASSWORD: password
-                       expose:
-                         - "3306"
-                       ports:
-                         - "3336:3306"
-                       restart: always
+services:
+ drupal_db:
+   image: mariadb:10.3
+   environment:
+     MYSQL_USER: drupal
+     MYSQL_PASSWORD: password
+     MYSQL_DATABASE: drupal
+     MYSQL_ROOT_PASSWORD: password
+   expose:
+     - "3306"
+   ports:
+     - "3336:3306"
+   restart: always

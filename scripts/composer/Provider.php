@@ -5,6 +5,7 @@ namespace cjgratacos\Deployment\Composer;
 use Composer\Script\Event;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
+use Symfony\Component\Process\Process;
 
 class Provider {
 
@@ -98,13 +99,13 @@ class Provider {
    * @return string
    */
   public function generateDBConnectionString(array $dbConfig):string {
+
     switch ($dbConfig['driver']){
       case 'sqlite':
-
-        return "${$dbConfig['driver']}://${$dbConfig['path']}";
+        return sprintf("%s://%s",$dbConfig['driver'],$dbConfig['path']);
         break;
       case 'mysql':
-        return "${$dbConfig['driver']}://${$dbConfig['username']}:${$dbConfig['password']}@${$dbConfig['host']}:${$dbConfig['port']}/${$dbConfig['name']}";
+        return sprintf("%s://%s:%s@%s:%d/%s", $dbConfig['driver'], $dbConfig['username'],$dbConfig['password'], $dbConfig['host'], $dbConfig['port'], $dbConfig['name']);
         break;
       default:
         throw new InvalidArgumentException("Invalid Driver, can install site only with sqlite or mysql drivers.",1);
@@ -116,6 +117,7 @@ class Provider {
    */
   public function clearDbFiles(array $dbConfig):void{
     if ($dbConfig['driver'] == 'sqlite') {
+      $fs = new Filesystem();
       $fs->remove($this->drupalRoot .'/'. $dbConfig['path']);
     }
   }
@@ -186,7 +188,8 @@ class Provider {
         $this->copyFiles("$this->backupPath/backup.sqlite", $dbConfig['path']);
         break;
       case 'mysql':
-        $process = new Process("mysql  --user=${$dbConfig['username']} --password=${$dbConfig['password-db']} --host=${$dbConfig['host-db']} --port=${$dbConfig['port-db']} --database=${$dbConfig['name-db']} < backup.sql", $this->backupPath);
+        $cmd = sprintf("mysql  --user=%s --password=%s --host=%s --port=%s --database=%s < backup.sql", $dbConfig['username'], $dbConfig['password'], $dbConfig['host'], $dbConfig['port'], $dbConfig['name']);
+        $process = new Process($cmd, $this->backupPath);
         $process->setTimeout(null);
         $process->run();
         break;
@@ -218,8 +221,8 @@ class Provider {
   }
 
   private function backupMysql(array $dbConfig):void{
-
-    $process = new Process("mysqldump  --user=${$dbConfig['username']} --password=${$dbConfig['password']} --host=${$dbConfig['host']} --port=${$dbConfig['port']} --result-file=backup.sql ${$dbConfig['name']}",self::backupPath());
+    $cmd = sprintf("mysqldump  --user=%s --password=%s --host=%s --port=%s --result-file=%s %s", $dbConfig['username'], $dbConfig['password'], $dbConfig['host'], $dbConfig['port'], 'backup.sql', $dbConfig['name']);
+    $process = new Process($cmd,self::backupPath());
     $process->setTimeout(null);
 
     $process->run(function ($type, $buffer){
@@ -256,7 +259,6 @@ class Provider {
   private function attachPrefixBasePathToFolderMap(string $basePath, array $folderMap):array {
     $arr = [];
     foreach ($folderMap as $src=>$dest) {
-      echo "$src=>$dest | ";
       $arr[$basePath.$src] = $basePath.$dest;
     }
     return $arr;

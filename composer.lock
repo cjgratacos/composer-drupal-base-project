@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "761d43b5319da581b8a02acc6c2db850",
+    "content-hash": "6e8b75e4ece48ff8fa6ab8c292aafcc5",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -2701,7 +2701,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupal.org/project/schemata",
-                "reference": "99c723ddd4f8489d82f030d686d68f72f6055cdc"
+                "reference": "41eac7337fcf8beab533dc7c59859053f57c5e4c"
             },
             "require": {
                 "drupal/core": "*"
@@ -2712,8 +2712,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-alpha1+7-dev",
-                    "datestamp": "1498493042",
+                    "version": "8.x-1.0-alpha2+5-dev",
+                    "datestamp": "1503168244",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"
@@ -2759,7 +2759,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/schemata"
             },
-            "time": "2017-06-26 15:52:18"
+            "time": "2017-08-19 18:52:58"
         },
         {
             "name": "drupal/schemata_json_schema",
@@ -2774,8 +2774,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-alpha1+7-dev",
-                    "datestamp": "1498493042",
+                    "version": "8.x-1.0-alpha2+5-dev",
+                    "datestamp": "1503168244",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Project has not opted into security advisory coverage!"

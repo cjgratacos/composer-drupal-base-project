@@ -121,7 +121,7 @@ class Handler
 
     $provider->backupDb($devDb);
 
-    echo "Finished backing up ${$devDb['driver']} db to ".$provider->backupPath() ;
+    echo sprintf("Finished backing up %s db to %s", $devDb['driver'],$provider->backupPath());
   }
 
   public static function restoreBackupDevServer(Event $event):void {
@@ -144,6 +144,6 @@ class Handler
 
   public static function removeBackupDevServer():void {
     $provider = new Provider();
-    $provider->removeBackup();
+    $provider->removeDBBackup();
   }
 }
