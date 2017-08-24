@@ -1,35 +1,48 @@
-version: '2'
+version: '3'
 services:
   web:
     build:
-      context: ./docker/
+      context: ./docker/apache
       args:
-        DRUPAL_PROFILE: standard
-        DRUPAL_SITE_NAME: Drupal Website
-        DRUPAL_USER: admin
-        DRUPAL_PASS: admin
-        DRUPAL_DB_USER: drupal
-        DRUPAL_DB_PASS: password
-        DRUPAL_DB_HOST: mysql
-        DRUPAL_DB_PORT: 3306
-        DRUPAL_DB_NAME: drupal
+        COMPOSER_VERSION: 1.5.1
+    env_file:
+      - ./drupal/.local.env
+    environment:
+      - DB_HOST=drupal_db
     ports:
+    # Normal HTTP Port
       - "80:80"
+    # PimpMyLogsPort
+      - "8081:8081"
+    # XDebug Port
+      - "9000:9000"
+    expose:
+      - "8081"
+      - "9000"
     volumes:
       - ./drupal/:/var/www/drupal
+    depends_on:
+      - database
     links:
-      - drupal_db:mysql
+      - database:drupal_db
+    network_mode: bridge
     working_dir: /var/www/drupal
+    container_name: drupal_dev
     restart: always
-  drupal_db:
-   image: mariadb:10.3
-   environment:
-     MYSQL_USER: drupal
-     MYSQL_PASSWORD: password
-     MYSQL_DATABASE: drupal
-     MYSQL_ROOT_PASSWORD: password
-   expose:
-     - "3306"
-   ports:
-     - "3336:3306"
-   restart: always
+
+  database:
+    image: 'bitnami/mariadb:latest'
+    environment:
+      MARIADB_USER: drupal
+      MARIADB_PASSWORD: password
+      MARIADB_DATABASE: drupal
+      MARIADB_ROOT_PASSWORD: password
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    network_mode: bridge
+    container_name: drupal_db
+    volumes:
+      - ./docker_files/db/init/:/docker-entrypoint-initdb.d/
+    restart: always
