@@ -1,6 +1,6 @@
 {
   "name": "cjgratacos/composer-drupal-base",
-  "description": "composer drupal base project",
+  "description": "Simple composer drupal base project.",
   "type": "project",
   "license": "GNU GPL3",
   "authors": [
