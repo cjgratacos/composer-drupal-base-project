@@ -1,0 +1,139 @@
+{
+  "name": "cjgratacos/composer-drupal-base",
+  "description": "composer drupal base project",
+  "type": "project",
+  "license": "GNU GPL3",
+  "authors": [
+    {
+      "name": "cjgratacos",
+      "email": "cjgratacos@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  ],
+  "require": {
+    "php":"~7.1",
+    "cweagans/composer-patches": "^1.5.0",
+    "composer/installers": "1.2.0",
+    "drupal-composer/drupal-scaffold": "^2.0.0",
+    "wikimedia/composer-merge-plugin": "^1.4",
+    "drupal/core": "8.3.7",
+    "webflo/drupal-core-strict": "8.3.7",
+    "drupal/console":"~1.0",
+    "drush/drush": "~8.0",
+    "rmccue/requests": "~1.0",
+    "pmill/php-scheduler": "^0.1.3",
+    "react/react": "^0.4.2",
+    "fproject/php-jwt": "~4.0",
+    "symfony/process": "~2.5|~3.0",
+    "aws/aws-sdk-php": "^3.18",
+    "symfony/dotenv": "^4.0@dev",
+    "composer/composer": "^1.6@dev",
+    "drupal/autologout": "1.x-dev",
+    "drupal/content_access": "1.x-dev",
+    "drupal/ctools": "3.x-dev",
+    "drupal/entity_reference_revisions": "1.x-dev",
+    "drupal/extlink": "1.x-dev",
+    "drupal/field_group": "3.x-dev",
+    "drupal/jstimer": "1.x-dev",
+    "drupal/maxlength": "1.x-dev",
+    "drupal/panelizer": "4.x-dev",
+    "drupal/panels": "4.x-dev",
+    "drupal/paragraphs": "1.x-dev",
+    "drupal/pathauto": "1.x-dev",
+    "drupal/search_api": "1.x-dev",
+    "drupal/search_api_page": "1.x-dev",
+    "drupal/token": "1.x-dev",
+    "drupal/bootstrap_layouts": "5.x-dev",
+    "drupal/adminimal_theme": "1.x-dev",
+    "drupal/admin_toolbar": "1.x-dev"
+
+  },
+  "require-dev":{
+    "jcalderonzumba/gastonjs": "~1.0.2",
+    "jcalderonzumba/mink-phantomjs-driver": "~0.3.1",
+    "mikey179/vfsstream": "~1.2",
+    "symfony/css-selector": "~2.8",
+    "drupal/devel":"^1.0@dev",
+    "drupal/examples":"^1.0@dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "cjgratacos\\Deployment\\Composer\\":"scripts/composer"
+    }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+      "cjgratacos\\Deployment\\Composer\\ScriptHandler::createLinks",
+      "cjgratacos\\Deployment\\Composer\\ScriptHandler::createEnvLink",
+      "cjgratacos\\Deployment\\Composer\\ScriptHandler::copyDrupalSettingsFile"
+    ],
+    "refresh:config": [
+      "cjgratacos\\Deployment\\Composer\\ScriptHandler::createLinks",
+      "cjgratacos\\Deployment\\Composer\\ScriptHandler::createEnvLink",
+      "cjgratacos\\Deployment\\Composer\\ScriptHandler::copyDrupalSettingsFile"
+    ],
+    "generate:links:config": "cjgratacos\\Deployment\\Composer\\ScriptHandler::createLinks",
+    "generate:links:env": "cjgratacos\\Deployment\\Composer\\ScriptHandler::createEnvLink",
+    "generate:site:config": "cjgratacos\\Deployment\\Composer\\ScriptHandler::copyDrupalSettingsFile",
+    "dev:server:install": "cjgratacos\\Deployment\\Composer\\ScriptHandler::siteInstallDev",
+    "dev:server:run":"cjgratacos\\Deployment\\Composer\\ScriptHandler::drushLocalServer",
+    "dev:drush": "cjgratacos\\Deployment\\Composer\\ScriptHandler::devRunCommandTool",
+    "dev:drupal": "cjgratacos\\Deployment\\Composer\\ScriptHandler::devRunCommandTool"
+  },
+  "extra": {
+    "installer-paths": {
+      "web/core": [
+        "type:drupal-core"
+      ],
+      "web/libraries/{$name}":[
+        "type:drupal-library"
+      ],
+      "web/modules/contrib/{$name}": [
+        "type:drupal-module"
+      ],
+      "web/profiles/contrib/{$name}": [
+        "type:drupal-profile"
+      ],
+      "web/themes/contrib/{$name}": [
+        "type:drupal-theme"
+      ],
+      "web/contrib/{$name}": [
+        "type:drupal-drush"
+      ]
+    },
+    "enable-patching":true,
+    "local-dev-port": 8888,
+    "project-files-drupal-mapping": {
+      "modules": {
+        "drupal":"web/modules/internal",
+        "project":"../../modules"
+      },
+      "themes": {
+        "drupal":"web/themes/internal",
+        "project":"../../themes"
+      }
+    },
+    "merge-plugin": {
+      "include": [
+        "modules/*/composer.json"
+      ],
+      "recurse": true,
+      "replace": false,
+      "ignore-duplicates": false,
+      "merge-dev": true,
+      "merge-extra": false,
+      "merge-extra-deep": false,
+      "merge-scripts": false
+    }
+  },
+  "config": {
+    "bin-dir": "bin/"
+  }
+}

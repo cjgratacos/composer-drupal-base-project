@@ -1,14 +1,17 @@
-version: '2'
+version: '3'
 services:
- drupal_db:
-   image: mariadb:10.3
-   environment:
-     MYSQL_USER: drupal
-     MYSQL_PASSWORD: password
-     MYSQL_DATABASE: drupal
-     MYSQL_ROOT_PASSWORD: password
-   expose:
-     - "3306"
-   ports:
-     - "3336:3306"
-   restart: always
+
+  database:
+    image: 'bitnami/mariadb:latest'
+    environment:
+      MARIADB_USER: drupal
+      MARIADB_PASSWORD: password
+      MARIADB_DATABASE: drupal
+      MARIADB_ROOT_PASSWORD: password
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    network_mode: bridge
+    container_name: drupal_db
+    restart: always
