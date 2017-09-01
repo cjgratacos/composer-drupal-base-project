@@ -34,11 +34,6 @@ class Provider {
   /**
    * @var string
    */
-  private $dockerTemplateFolder;
-
-  /**
-   * @var string
-   */
   private $envPaths;
 
   /**
@@ -57,8 +52,7 @@ class Provider {
     $this->binDir = $this->projectRoot.'/bin';
     // Template folder
     $this->templateFolder = $this->projectRoot . '/scripts/composer/templates';
-    // Docker template folder
-    $this->dockerTemplateFolder = $this->templateFolder . '/docker-dev';
+
     // ENV Paths
     $this->envPaths = [
       'LOCAL'=>'.local.env',
@@ -202,8 +196,8 @@ class Provider {
 
   public function geDockerConfigFilesToCopy(): array  {
     return [
-      $this->dockerTemplateFolder . '/services.yml' => $this->drupalRoot .'/sites/default/services.yml',
-      $this->dockerTemplateFolder . '/settings.php' => $this->drupalRoot .'/sites/default/settings.php'
+      $this->templateFolder . '/services.yml' => $this->drupalRoot .'/sites/default/services.yml',
+      $this->templateFolder . '/settings.php' => $this->drupalRoot .'/sites/default/settings.php'
     ];
   }
 

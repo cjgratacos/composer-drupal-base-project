@@ -69,11 +69,11 @@ class ScriptHandler
     // Get Drupal Site Password
     $sitePassword = $provider->getSitePasswordBasedOnEnv();
 
-    // Create new Process instance that is going to run the `drush si` with an sqlite db
+    // Create new Process instance that is going to run the `drush si`
     self::runProcess("$drush si --db-url=${uri} --account-pass=${sitePassword} -y", $drupalRoot);
   }
 
-  public static function docker(Event $event):void {
+  public static function devRunCommandTool(Event $event):void {
     // Getting Command Name
     $name = $event->getName();
 
@@ -95,10 +95,10 @@ class ScriptHandler
 
     // Select Executor
     switch ($name){
-      case 'docker:drush':
+      case 'dev:drush':
         $executor = $provider->getDrush();
         break;
-      case 'docker:drupal':
+      case 'dev:drupal':
         $executor = $provider->getDrupalConsole();
         break;
       default:
@@ -114,6 +114,26 @@ class ScriptHandler
     $envMap = $provider->generateEnvFileMapping();
 
     self::link($envMap);
+  }
+
+  public static function drushLocalServer(Event $event):void {
+
+    $extra = $event->getComposer()->getPackage()->getExtra();
+
+    if (!isset($extra['local-dev-port']) && !is_scalar($extra['local-dev-port'])){
+      throw new InvalidArgumentException("The parameter 'local-dev-port' needs to be configured through the extra.local-dev-port settings as a scalar value.",1);
+    }
+
+    // Getting the Provider
+    $provider = new Provider();
+
+    // Getting Common variables
+    $drupal_root = $provider->getDrupalRoot();
+    $drush = $provider->getDrush();
+    $port = $extra['local-dev-port'];
+
+    // Create new Process instance that is going to run the `drush rs``
+    self::runProcess("$drush rs $port $drupal_root", $drupal_root);
   }
 
   private static function link(array $sourceDestMap):void {
@@ -138,8 +158,9 @@ class ScriptHandler
 
   private static function runProcess(string $cmd, string $path):void{
     // Create Process
-    $process = new Process($cmd, $path, $timeout=null);
+    $process = new Process($cmd, $path);
 
+    $process->setTimeout(null);
     $process->enableOutput();
 
     // Run Process

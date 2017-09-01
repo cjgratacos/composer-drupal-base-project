@@ -70,15 +70,22 @@
   "scripts": {
     "post-install-cmd": [
       "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
-      "@composer generate:links:config",
-      "@composer generate:links:env"
+      "cjgratacos\\Deployment\\Composer\\ScriptHandler::createLinks",
+      "cjgratacos\\Deployment\\Composer\\ScriptHandler::createEnvLink",
+      "cjgratacos\\Deployment\\Composer\\ScriptHandler::copyDrupalSettingsFile"
+    ],
+    "refresh:config": [
+      "cjgratacos\\Deployment\\Composer\\ScriptHandler::createLinks",
+      "cjgratacos\\Deployment\\Composer\\ScriptHandler::createEnvLink",
+      "cjgratacos\\Deployment\\Composer\\ScriptHandler::copyDrupalSettingsFile"
     ],
     "generate:links:config": "cjgratacos\\Deployment\\Composer\\ScriptHandler::createLinks",
     "generate:links:env": "cjgratacos\\Deployment\\Composer\\ScriptHandler::createEnvLink",
     "generate:site:config": "cjgratacos\\Deployment\\Composer\\ScriptHandler::copyDrupalSettingsFile",
     "dev:server:install": "cjgratacos\\Deployment\\Composer\\ScriptHandler::siteInstallDev",
-    "docker:drush": "cjgratacos\\Deployment\\Composer\\ScriptHandler::docker",
-    "docker:drupal": "cjgratacos\\Deployment\\Composer\\ScriptHandler::docker"
+    "dev:server:run":"cjgratacos\\Deployment\\Composer\\ScriptHandler::drushLocalServer",
+    "dev:drush": "cjgratacos\\Deployment\\Composer\\ScriptHandler::devRunCommandTool",
+    "dev:drupal": "cjgratacos\\Deployment\\Composer\\ScriptHandler::devRunCommandTool"
   },
   "extra": {
     "installer-paths": {
@@ -102,7 +109,7 @@
       ]
     },
     "enable-patching":true,
-
+    "local-dev-port": 8888,
     "project-files-drupal-mapping": {
       "modules": {
         "drupal":"web/modules/internal",
@@ -111,10 +118,6 @@
       "themes": {
         "drupal":"web/themes/internal",
         "project":"../../themes"
-      },
-      "config": {
-        "drupal": "web/sites/default/files/config/sync",
-        "project": "../../../../../config"
       }
     },
     "merge-plugin": {

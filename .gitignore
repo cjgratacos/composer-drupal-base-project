@@ -2,4 +2,4 @@ vendor
 web
 .idea
 bin
-drupal-backup
+composer.lock

@@ -1,34 +1,5 @@
 version: '3'
 services:
-  web:
-    build:
-      context: ./docker/apache
-      args:
-        COMPOSER_VERSION: 1.5.1
-    env_file:
-      - ./drupal/.local.env
-    environment:
-      - DB_HOST=drupal_db
-    ports:
-    # Normal HTTP Port
-      - "80:80"
-    # PimpMyLogsPort
-      - "8081:8081"
-    # XDebug Port
-      - "9000:9000"
-    expose:
-      - "8081"
-      - "9000"
-    volumes:
-      - ./drupal/:/var/www/drupal
-    depends_on:
-      - database
-    links:
-      - database:drupal_db
-    network_mode: bridge
-    working_dir: /var/www/drupal
-    container_name: drupal_dev
-    restart: always
 
   database:
     image: 'bitnami/mariadb:latest'
@@ -43,6 +14,4 @@ services:
       - "3306:3306"
     network_mode: bridge
     container_name: drupal_db
-    volumes:
-      - ./docker_files/db/init/:/docker-entrypoint-initdb.d/
     restart: always

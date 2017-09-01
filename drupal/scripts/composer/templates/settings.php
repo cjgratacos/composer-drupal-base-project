@@ -1,9 +1,9 @@
 <?php
 
-if (file_exists(getcwd() . '/.env')){
+if (file_exists(__DIR__ . '/.env')){
   require_once __DIR__ . '/../../autoload.php';
   $dotEnv = new Symfony\Component\Dotenv\Dotenv();
-  $dotEnv->load(getcwd() . '/.env');
+  $dotEnv->load(__DIR__ . '/.env');
 }
 
 $config_directories = [
@@ -28,8 +28,4 @@ $settings = [
     __DIR__ . '/services.yml'
   ],
   'install_profile' => getenv('DRUPAL_PROFILE'),
-  'vaultURL' => getenv('VAULT_URL'),
-  'vaultAppId' => getenv('VAULT_APPID'),
-  'vaultUserId' => getenv('VAULT_USERID'),
-  'vaultName' => getenv('VAULT_NAME')
 ];
